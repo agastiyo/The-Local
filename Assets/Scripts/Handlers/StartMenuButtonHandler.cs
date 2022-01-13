@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class StartMenuButtonHandler : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class StartMenuButtonHandler : MonoBehaviour
     {
         startup.menuCanvas.enabled = false;
         startup.creditsCanvas.enabled = true;
+        startup.creditsVideoPlayer.Play();
         //switch to credits canvas
     }
 
@@ -48,6 +50,7 @@ public class StartMenuButtonHandler : MonoBehaviour
     {
         startup.saveSelectCanvas.enabled = false;
         startup.menuCanvas.enabled = true;
+        //go back to menu
     }
 
     //--------------------
@@ -58,6 +61,7 @@ public class StartMenuButtonHandler : MonoBehaviour
     {
         startup.settingsCanvas.enabled = false;
         startup.menuCanvas.enabled = true;
+        //go back to menu
     }
 
     //--------------------
@@ -66,8 +70,10 @@ public class StartMenuButtonHandler : MonoBehaviour
 
     public void OnCreditsBack()
     {
+        startup.creditsVideoPlayer.Stop();
         startup.creditsCanvas.enabled = false;
         startup.menuCanvas.enabled = true;
+        //go back to menu
     }
 
     //--------------------
