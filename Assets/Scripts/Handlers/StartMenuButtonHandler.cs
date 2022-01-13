@@ -37,7 +37,6 @@ public class StartMenuButtonHandler : MonoBehaviour
 
     public void OnExitGame()
     {
-        Debug.Log("Quitting");
         Application.Quit();
         //quit the game
     }
@@ -45,13 +44,31 @@ public class StartMenuButtonHandler : MonoBehaviour
 
     //Save Select Buttons ---------------------
 
+    public void OnSaveSelectBack()
+    {
+        startup.saveSelectCanvas.enabled = false;
+        startup.menuCanvas.enabled = true;
+    }
+
     //--------------------
 
     //Settings Buttons --------------------
 
+    public void OnSettingsBack()
+    {
+        startup.settingsCanvas.enabled = false;
+        startup.menuCanvas.enabled = true;
+    }
+
     //--------------------
 
     //Credits Buttons --------------------
+
+    public void OnCreditsBack()
+    {
+        startup.creditsCanvas.enabled = false;
+        startup.menuCanvas.enabled = true;
+    }
 
     //--------------------
 }
