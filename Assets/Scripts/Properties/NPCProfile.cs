@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class NPCProfile : MonoBehaviour
 {
-    public string NPCname;
-    public string profession;
+    public string npcName;
+    public string npcProfession;
 }
