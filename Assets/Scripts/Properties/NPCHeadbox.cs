@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(TextMesh))]
+[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(MeshRenderer))]
 public class NPCHeadbox : MonoBehaviour
 {
     public NPCProfile npcProfile;
-    public TextMesh thisHeadbox;
+    public TextMesh thisHeadboxText;
+    public BoxCollider thisHeadboxCollider;
+    public MeshRenderer thisHeadboxRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
-        thisHeadbox.text = $"{npcProfile.npcName}\n-{npcProfile.npcProfession}-";
+        thisHeadboxRenderer.enabled = false;
+        thisHeadboxText.text = $"{npcProfile.npcName}\n-{npcProfile.npcProfession}-";
     }
 
     // Update is called once per frame
@@ -19,5 +24,15 @@ public class NPCHeadbox : MonoBehaviour
     {
         Quaternion rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
         transform.rotation = rotation;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        thisHeadboxRenderer.enabled = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        thisHeadboxRenderer.enabled = false;
     }
 }
