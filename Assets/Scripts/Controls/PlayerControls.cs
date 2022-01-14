@@ -12,7 +12,7 @@ public class PlayerControls : MonoBehaviour
     public float sprintMultiplier;
 
     private float moveSpeedTemp;
-    private float jumpRaycastDistance = 1f;
+    private float jumpRaycastDistance = 1.05f;
 
     private Rigidbody rb;
 

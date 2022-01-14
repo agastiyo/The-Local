@@ -11,7 +11,7 @@ public class StartMenuButtonHandler : MonoBehaviour
     //Menu Buttons --------------------
     public void OnNewGame()
     {
-        SceneManager.LoadScene(1);
+        StartCoroutine(LoadUnloadScenes("LoaderScene", "StartMenu"));
         //Go to game scene
     }
 
@@ -77,4 +77,19 @@ public class StartMenuButtonHandler : MonoBehaviour
     }
 
     //--------------------
+
+    private IEnumerator LoadUnloadScenes(string sceneToLoad, string sceneToUnload) {
+        yield return StartCoroutine(LoadScene(sceneToLoad));
+        yield return StartCoroutine(UnloadScene(sceneToUnload));
+    }
+
+    private IEnumerator LoadScene(string sceneToLoad) {
+        AsyncOperation loadScene = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
+        yield return new WaitUntil(() => loadScene.isDone);
+    }
+
+    private IEnumerator UnloadScene(string sceneToUnload) {
+        AsyncOperation unloadScene = SceneManager.UnloadSceneAsync(sceneToUnload);
+        yield return new WaitUntil(() => unloadScene.isDone);
+    }
 }
