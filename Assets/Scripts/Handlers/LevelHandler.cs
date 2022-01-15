@@ -25,18 +25,36 @@ public class LevelHandler : MonoBehaviour
 
     private IEnumerator StartGameAsync(string startingLevel) 
     {
+        yield return StartCoroutine(StartLoading());
         yield return StartCoroutine(LoadScene("Player"));
         yield return StartCoroutine(LoadScene(startingLevel));
         yield return StartCoroutine(UnloadScene("StartMenu"));
+        yield return StartCoroutine(FinishLoading());
     }
 
     // Base Functions --------------------------------
+    private IEnumerator StartLoading() 
+    {
+        AsyncOperation showLoadScreen = SceneManager.LoadSceneAsync("LoadingScreen", LoadSceneMode.Additive);
+        yield return new WaitUntil(() => showLoadScreen.isDone);
+        //add loading effects here
+        
+        yield return new WaitForSecondsRealtime(0.5f);
+        Time.timeScale = 0f;
+    }
+    private IEnumerator FinishLoading()
+    {
+        //add loading effects here
+        AsyncOperation hideLoadScreen = SceneManager.UnloadSceneAsync("LoadingScreen");
+        yield return new WaitUntil(() => hideLoadScreen.isDone);
+
+        Time.timeScale = 1f;
+    }
     private IEnumerator LoadScene(string sceneToLoad) 
     {
         AsyncOperation loadScene = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
         yield return new WaitUntil(() => loadScene.isDone);
     }
-
     private IEnumerator UnloadScene(string sceneToUnload) 
     {
         AsyncOperation unloadScene = SceneManager.UnloadSceneAsync(sceneToUnload);
