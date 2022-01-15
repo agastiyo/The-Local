@@ -35,8 +35,8 @@ public class StartMenuButtonHandler : MonoBehaviour
     //Menu Buttons --------------------
     public void OnNewGame()
     {
-        StartCoroutine(levelHandler.StartGame("Placeholder"));
-        //Go to game scene
+        levelHandler.StartGame("Placeholder");
+        //Start the game
     }
 
     public void OnLoadGame()

@@ -17,22 +17,28 @@ public class LevelHandler : MonoBehaviour
         
     }
 
-    public IEnumerator StartGame(string startingLevel) {
-        yield return StartCoroutine(LoadUnloadScenes("Player", "StartMenu"));
+    //DON'T delete these two! StartGame() is needed to run StartGameAsync() on the Start Menu Button Handler!
+    public void StartGame(string startingLevel) 
+    {
+        StartCoroutine(StartGameAsync(startingLevel));
+    }
+
+    private IEnumerator StartGameAsync(string startingLevel) 
+    {
+        yield return StartCoroutine(LoadScene("Player"));
         yield return StartCoroutine(LoadScene(startingLevel));
+        yield return StartCoroutine(UnloadScene("StartMenu"));
     }
 
-    private IEnumerator LoadUnloadScenes(string sceneToLoad, string sceneToUnload) {
-        yield return StartCoroutine(UnloadScene(sceneToUnload));
-        yield return StartCoroutine(LoadScene(sceneToLoad));
-    }
-
-    private IEnumerator LoadScene(string sceneToLoad) {
+    // Base Functions --------------------------------
+    private IEnumerator LoadScene(string sceneToLoad) 
+    {
         AsyncOperation loadScene = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
         yield return new WaitUntil(() => loadScene.isDone);
     }
 
-    private IEnumerator UnloadScene(string sceneToUnload) {
+    private IEnumerator UnloadScene(string sceneToUnload) 
+    {
         AsyncOperation unloadScene = SceneManager.UnloadSceneAsync(sceneToUnload);
         yield return new WaitUntil(() => unloadScene.isDone);
     }
