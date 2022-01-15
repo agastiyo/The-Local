@@ -6,34 +6,58 @@ using UnityEngine.Video;
 
 public class StartMenuButtonHandler : MonoBehaviour
 {
-    public MenuStartup startup;
+    [Header("Canvases")]
+    public Canvas menuCanvas;
+    [Space(5)]
+    public Canvas saveSelectCanvas;
+    [Space(5)]
+    public Canvas settingsCanvas;
+    [Space(5)]
+    public Canvas creditsCanvas;
+
+    [Header("Other")]
+    public VideoPlayer creditsVideoPlayer;
+
+    private LevelHandler levelHandler;
+
+    void Start()
+    {
+        levelHandler = FindObjectOfType<LevelHandler>();
+
+        menuCanvas.enabled = true;
+        saveSelectCanvas.enabled = false;
+        settingsCanvas.enabled = false;
+        creditsCanvas.enabled = false;
+
+        creditsVideoPlayer.Stop();
+    }
 
     //Menu Buttons --------------------
     public void OnNewGame()
     {
-        StartCoroutine(LoadUnloadScenes("LoaderScene", "StartMenu"));
+        StartCoroutine(levelHandler.StartGame("Placeholder"));
         //Go to game scene
     }
 
     public void OnLoadGame()
     {
-        startup.menuCanvas.enabled = false;
-        startup.saveSelectCanvas.enabled = true;
+        menuCanvas.enabled = false;
+        saveSelectCanvas.enabled = true;
         //switch to save select canvas
     }
 
     public void OnSettings()
     {
-        startup.menuCanvas.enabled = false;
-        startup.settingsCanvas.enabled = true;
+        menuCanvas.enabled = false;
+        settingsCanvas.enabled = true;
         //switch to settings canvas
     }
 
     public void OnCredits()
     {
-        startup.menuCanvas.enabled = false;
-        startup.creditsCanvas.enabled = true;
-        startup.creditsVideoPlayer.Play();
+        menuCanvas.enabled = false;
+        creditsCanvas.enabled = true;
+        creditsVideoPlayer.Play();
         //switch to credits canvas
     }
 
@@ -48,8 +72,8 @@ public class StartMenuButtonHandler : MonoBehaviour
 
     public void OnSaveSelectBack()
     {
-        startup.saveSelectCanvas.enabled = false;
-        startup.menuCanvas.enabled = true;
+        saveSelectCanvas.enabled = false;
+        menuCanvas.enabled = true;
         //go back to menu
     }
 
@@ -59,8 +83,8 @@ public class StartMenuButtonHandler : MonoBehaviour
 
     public void OnSettingsBack()
     {
-        startup.settingsCanvas.enabled = false;
-        startup.menuCanvas.enabled = true;
+        settingsCanvas.enabled = false;
+        menuCanvas.enabled = true;
         //go back to menu
     }
 
@@ -70,9 +94,9 @@ public class StartMenuButtonHandler : MonoBehaviour
 
     public void OnCreditsBack()
     {
-        startup.creditsVideoPlayer.Stop();
-        startup.creditsCanvas.enabled = false;
-        startup.menuCanvas.enabled = true;
+        creditsVideoPlayer.Stop();
+        creditsCanvas.enabled = false;
+        menuCanvas.enabled = true;
         //go back to menu
     }
 

@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoaderSceneStartup : MonoBehaviour
+public class LevelHandler : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(LoadScene("Player"));
-        StartCoroutine(LoadScene("Placeholder"));
+        StartCoroutine(LoadScene("StartMenu"));
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public IEnumerator StartGame(string startingLevel) {
+        yield return StartCoroutine(LoadUnloadScenes("Player", "StartMenu"));
+        yield return StartCoroutine(LoadScene(startingLevel));
     }
 
     private IEnumerator LoadUnloadScenes(string sceneToLoad, string sceneToUnload) {
