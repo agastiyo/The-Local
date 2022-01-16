@@ -25,6 +25,14 @@ public class LoadingPanel : MonoBehaviour
 
     public void TweenIn() 
     {
-        
+        panel.rectTransform.anchoredPosition = new Vector2(0f,-2000f);
+        Tween tween = panel.rectTransform.DOAnchorPosY(0f, duration).SetUpdate(true).SetEase(Ease.OutSine);
+        tween.onComplete += () => isLoading = true;
+    }
+
+    public void TweenOut() 
+    {
+        Tween tween = panel.rectTransform.DOAnchorPosY(-2000f, duration).SetUpdate(true).SetEase(Ease.InSine);
+        tween.onComplete += () => isLoading = false;
     }
 }
