@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XNode;
 
 public class NodeReader : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public DialogueGraph graph;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        foreach (BaseNode node in graph.nodes)
+        {
+            if(node.GetString() == "start") 
+            {
+                graph.current = node;
+                break;
+                //identify starting node
+            }
+        }
     }
 }
