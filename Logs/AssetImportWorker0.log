@@ -314,3 +314,128 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.010591 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\agast\Documents\Coding\The-Local\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\agast\Documents\Coding\The-Local\Library\PackageCache\com.unity.visualscripting@1.7.6\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.61 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---> System.NullReferenceException: Object reference not set to an instance of an object
+  at XNodeEditor.NodeEditorAssetModProcessor.OnReloadEditor () [0x0004b] in C:\Users\agast\Documents\Coding\The-Local\Assets\xNode-master\Scripts\Editor\NodeEditorAssetModProcessor.cs:55 
+  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)
+  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x0006a] in <31c0f51ac5a24a22ba784db24f4ba023>:0 
+   --- End of inner exception stack trace ---
+  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00083] in <31c0f51ac5a24a22ba784db24f4ba023>:0 
+  at System.Reflection.MethodBase.Invoke (System.Object obj, System.Object[] parameters) [0x00000] in <31c0f51ac5a24a22ba784db24f4ba023>:0 
+  at UnityEditor.EditorAssemblies.ProcessInitializeOnLoadMethodAttributes () [0x000a5] in <0cde216a590a4d6fbc3d7db7ac203c5d>:0 
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadMethodAttributes ()
+
+Mono: successfully reloaded assembly
+- Completed reload, in  1.096 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1096ms)
+		BeginReloadAssembly (156ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (36ms)
+		EndReloadAssembly (832ms)
+			LoadAssemblies (102ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (287ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (40ms)
+			SetupLoadedEditorAssemblies (367ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (71ms)
+				ProcessInitializeOnLoadAttributes (220ms)
+				ProcessInitializeOnLoadMethodAttributes (44ms)
+				AfterProcessingInitializeOnLoad (15ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.64 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3257 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 22 unused Assets / (24.9 KB). Loaded Objects now: 3747.
+Memory consumption went from 114.8 MB to 114.8 MB.
+Total: 3.464400 ms (FindLiveObjects: 0.346800 ms CreateObjectMapping: 0.086200 ms MarkObjects: 2.997300 ms  DeleteObjects: 0.032900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 325.720255 seconds.
+  path: Assets/Scripts/Nodes/New Dialogue Graph.asset
+  artifactKey: Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Nodes/New Dialogue Graph.asset using Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aec5e07963cce5d209201a2f61a5bac3') in 0.086535 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.617619 seconds.
+  path: Assets/Scripts/Nodes/New Dialogue Graph.asset
+  artifactKey: Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Nodes/New Dialogue Graph.asset using Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d485dfa2bf5b88bd3882c466ce612e5') in 0.006852 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.959060 seconds.
+  path: Assets/Scripts/Nodes/New Dialogue Graph.asset
+  artifactKey: Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Nodes/New Dialogue Graph.asset using Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fd7e3a89bacf66fd34b2bda17ddf3177') in 0.008006 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.784866 seconds.
+  path: Assets/Scripts/Nodes/New Dialogue Graph.asset
+  artifactKey: Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Nodes/New Dialogue Graph.asset using Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd78f3ce183f687fd95e0ea783c36b290') in 0.006933 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.013331 seconds.
+  path: Assets/Scripts/Nodes/New Dialogue Graph.asset
+  artifactKey: Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Nodes/New Dialogue Graph.asset using Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d8ce7ac05883764cde1b4d672fc27e5') in 0.006963 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 22.037815 seconds.
+  path: Assets/Scripts/Nodes/New Dialogue Graph.asset
+  artifactKey: Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Nodes/New Dialogue Graph.asset using Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd898233a4cd04c5cc76e1592c17ed900') in 0.007211 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.931152 seconds.
+  path: Assets/Scripts/Nodes/New Dialogue Graph.asset
+  artifactKey: Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Nodes/New Dialogue Graph.asset using Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a776cc4d47a7bc65712dfc2dd142e212') in 0.010356 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.268261 seconds.
+  path: Assets/Scripts/Nodes/New Dialogue Graph.asset
+  artifactKey: Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Nodes/New Dialogue Graph.asset using Guid(f01f8eed43da40b42aa0a490139fdaa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eebf952193c17c72e4fbab6cd0339f2c') in 0.007064 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4117.653358 seconds.
+  path: Assets/Scenes/Dialogue.unity
+  artifactKey: Guid(89533df69b42b8e4f84a0c6bf0e7215f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Dialogue.unity using Guid(89533df69b42b8e4f84a0c6bf0e7215f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '669dbf364f569a0124c9c41cbaefd8d5') in 0.011420 seconds 
