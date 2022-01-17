@@ -12,6 +12,6 @@ public class DialogueNode : BaseNode
 
     public override string GetString()
     {
-        return $"{npcName} says {npcDialogue}";
+        return $"DialogueNode/{npcName}/{npcDialogue}";
     }
 }
