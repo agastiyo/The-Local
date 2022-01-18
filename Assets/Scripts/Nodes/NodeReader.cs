@@ -5,12 +5,27 @@ using XNode;
 
 public class NodeReader : MonoBehaviour
 {
+    [HideInInspector]
     public DialogueGraph graph;
-    public TextMesh npcName;
-    public TextMesh npcDialogue;
+
+    private TextMesh npcName;
+    private TextMesh npcDialogue;
+    private LevelHandler levelHandler;
+    private TalkControl talkControl;
+    private DialogueHandler dialogueHandler;
 
     private void Start()
     {
+        GameObject.Find("Speaker").TryGetComponent(out npcName);
+        GameObject.Find("Dialogue").TryGetComponent(out npcDialogue);
+
+        levelHandler = FindObjectOfType<LevelHandler>();
+        talkControl = FindObjectOfType<TalkControl>();
+        dialogueHandler = FindObjectOfType<DialogueHandler>();
+
+        graph = dialogueHandler.currentGraph;
+        
+
         foreach (BaseNode node in graph.nodes)
         {
             if(node.GetString() == "start") 
@@ -39,6 +54,11 @@ public class NodeReader : MonoBehaviour
             yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
             yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
             NextNode("exit");
+        }
+        if (nodeData[0] == "Exit")
+        {
+            levelHandler.Unload("Dialogue");
+            talkControl.inDialogue = false;
         }
     }
 
