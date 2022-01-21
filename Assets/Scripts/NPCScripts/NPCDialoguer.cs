@@ -27,6 +27,7 @@ public class NPCDialoguer : MonoBehaviour
         playerControls.enabled = false;
         playerCameraController.enabled = false;
         dialogueHandler.currentGraph = thisDialogue;
+        Debug.Log("Graph has been set!");
     }
 
     private void OnTriggerExit(Collider other)
