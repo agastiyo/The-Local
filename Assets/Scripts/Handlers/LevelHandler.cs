@@ -8,16 +8,22 @@ public class LevelHandler : MonoBehaviour
 {
     private LoadingPanel loadingPanel;
 
+    public  
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(LoadScene("StartMenu"));
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Load(string sceneToLoad)
     {
-        
+        StartCoroutine(LoadScene(sceneToLoad));
+    }
+
+    public void Unload(string sceneToUnload)
+    {
+        StartCoroutine(UnloadScene(sceneToUnload));
     }
 
     //DON'T delete these two! StartGame() is needed to run StartGameAsync() on the Start Menu Button Handler!
@@ -25,7 +31,6 @@ public class LevelHandler : MonoBehaviour
     {
         StartCoroutine(StartGameAsync(startingLevel));
     }
-
     private IEnumerator StartGameAsync(string startingLevel) 
     {
         yield return StartCoroutine(StartLoading());
