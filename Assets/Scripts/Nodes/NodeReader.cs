@@ -57,8 +57,8 @@ public class NodeReader : MonoBehaviour
         }
         if (nodeData[0] == "Exit")
         {
-            levelHandler.Unload("Dialogue");
             talkControl.inDialogue = false;
+            levelHandler.Unload("Dialogue");
         }
     }
 
