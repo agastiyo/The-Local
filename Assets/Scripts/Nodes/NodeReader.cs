@@ -14,15 +14,16 @@ public class NodeReader : MonoBehaviour
     private LevelHandler levelHandler;
     private TalkControl talkControl;
     private DialogueHandler dialogueHandler;
+    private PlayerControls playerControls;
+    private PlayerCameraController playerCameraController;
 
     private void Start()
     {
-        //GameObject.Find("Speaker").TryGetComponent(out npcName);
-        //GameObject.Find("Dialogue").TryGetComponent(out npcDialogue);
-
         levelHandler = FindObjectOfType<LevelHandler>();
         talkControl = FindObjectOfType<TalkControl>();
         dialogueHandler = FindObjectOfType<DialogueHandler>();
+        playerControls = FindObjectOfType<PlayerControls>();
+        playerCameraController = FindObjectOfType<PlayerCameraController>();
 
         graph = dialogueHandler.currentGraph;
         Debug.Log("Current Graph loaded in reader!");
@@ -68,6 +69,9 @@ public class NodeReader : MonoBehaviour
         {
             talkControl.inDialogue = false;
             levelHandler.Unload("Dialogue");
+            playerControls.enabled = true;
+            playerCameraController.enabled = true;
+            //Load command in TalkControl.cs
         }
     }
 

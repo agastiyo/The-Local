@@ -24,8 +24,6 @@ public class NPCDialoguer : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         talkControl.enabled = true;
-        playerControls.enabled = false;
-        playerCameraController.enabled = false;
         dialogueHandler.currentGraph = thisDialogue;
         Debug.Log("Graph has been set!");
     }
@@ -33,8 +31,7 @@ public class NPCDialoguer : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         talkControl.enabled = false;
-        playerControls.enabled = true;
-        playerCameraController.enabled = true;
         dialogueHandler.currentGraph = null;
+        Debug.Log("Graph has been nulled!");
     }
 }
