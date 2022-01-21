@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 891fa07ef919c8b4993f84739dba6887, type: 3}
-  m_Name: New Dialogue Graph
+  m_Name: Aarush Test
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: -1997390651748188088}
