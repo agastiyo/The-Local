@@ -6,6 +6,8 @@ public class NPCDialoguer : MonoBehaviour
 {
     public DialogueGraph thisDialogue;
 
+    private LevelHandler levelHandler;
+
     private TalkControl talkControl;
     private PlayerControls playerControls;
     private PlayerCameraController playerCameraController;
@@ -14,6 +16,7 @@ public class NPCDialoguer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        levelHandler = FindObjectOfType<LevelHandler>();
         talkControl = FindObjectOfType<TalkControl>();
         playerControls = FindObjectOfType<PlayerControls>();
         playerCameraController = FindObjectOfType<PlayerCameraController>();
@@ -25,6 +28,7 @@ public class NPCDialoguer : MonoBehaviour
     {
         talkControl.enabled = true;
         dialogueHandler.currentGraph = thisDialogue;
+        levelHandler.Load("Action");
         Debug.Log("Graph has been set!");
     }
 
@@ -32,6 +36,7 @@ public class NPCDialoguer : MonoBehaviour
     {
         talkControl.enabled = false;
         dialogueHandler.currentGraph = null;
+        levelHandler.Unload("Action");
         Debug.Log("Graph has been nulled!");
     }
 }
