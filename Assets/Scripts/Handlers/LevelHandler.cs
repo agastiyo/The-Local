@@ -6,9 +6,7 @@ using UnityEngine.UI;
 
 public class LevelHandler : MonoBehaviour
 {
-    private LoadingPanel loadingPanel;
-
-    public  
+    private LoadingPanel loadingPanel;  
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +27,9 @@ public class LevelHandler : MonoBehaviour
     //DON'T delete these two! StartGame() is needed to run StartGameAsync() on the Start Menu Button Handler!
     public void StartGame(string startingLevel) 
     {
+        Debug.Log("Starting game!");
         StartCoroutine(StartGameAsync(startingLevel));
+        Debug.Log("Started game!");
     }
     private IEnumerator StartGameAsync(string startingLevel) 
     {

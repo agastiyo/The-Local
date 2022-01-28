@@ -12,18 +12,14 @@ public class NodeReader : MonoBehaviour
     public TextMeshProUGUI npcDialogue;
 
     private LevelHandler levelHandler;
-    private TalkControl talkControl;
     private DialogueHandler dialogueHandler;
-    private PlayerControls playerControls;
-    private PlayerCameraController playerCameraController;
+    private ActionHandler actionHandler;
 
     private void Start()
     {
         levelHandler = FindObjectOfType<LevelHandler>();
-        talkControl = FindObjectOfType<TalkControl>();
         dialogueHandler = FindObjectOfType<DialogueHandler>();
-        playerControls = FindObjectOfType<PlayerControls>();
-        playerCameraController = FindObjectOfType<PlayerCameraController>();
+        actionHandler = FindObjectOfType<ActionHandler>();
 
         graph = dialogueHandler.currentGraph;
         Debug.Log("Current Graph loaded in reader!");
@@ -45,12 +41,7 @@ public class NodeReader : MonoBehaviour
     private IEnumerator ParseNode() 
     {
         Debug.Log("Parsing node!");
-
-        var current = graph.current;
-        string str = current.GetString();
-        string[] nodeData = str.Split("/");
-
-        //string[] nodeData = graph.current.GetString().Split("/");
+        string[] nodeData = graph.current.GetString().Split("/");
 
         if (nodeData[0] == "Start") 
         {
@@ -67,10 +58,9 @@ public class NodeReader : MonoBehaviour
         }
         if (nodeData[0] == "Exit")
         {
-            talkControl.inDialogue = false;
+            actionHandler.InDialogue(false); //no longer in a dialogue
             levelHandler.Unload("Dialogue");
-            playerControls.enabled = true;
-            playerCameraController.enabled = true;
+            actionHandler.EnableControls();
             //Load command in TalkControl.cs
         }
     }

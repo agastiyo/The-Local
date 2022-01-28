@@ -5,9 +5,7 @@ using UnityEngine;
 public class TalkControl : MonoBehaviour
 {
     private LevelHandler levelHandler;
-    
-    public PlayerControls playerControls;
-    public PlayerCameraController playerCameraController;
+    private ActionHandler actionHandler;
 
     [HideInInspector]
     public bool inDialogue;
@@ -15,6 +13,7 @@ public class TalkControl : MonoBehaviour
     private void Start()
     {
         levelHandler = FindObjectOfType<LevelHandler>();
+        actionHandler = FindObjectOfType<ActionHandler>();
         inDialogue = false;
     }
 
@@ -22,8 +21,7 @@ public class TalkControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && !inDialogue)
         {
-            playerControls.enabled = false;
-            playerCameraController.enabled = false;
+            actionHandler.DisableControls();
             levelHandler.Load("Dialogue");
             inDialogue = true;
             //Note: unload command in NodeReader.cs
