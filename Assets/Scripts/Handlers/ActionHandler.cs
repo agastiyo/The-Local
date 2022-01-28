@@ -37,7 +37,6 @@ public class ActionHandler : MonoBehaviour
     { 
         talkControl.enabled = false; 
     }
-
     public void InDialogue(bool inDialogue) 
     {
         talkControl.inDialogue = inDialogue;

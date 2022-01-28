@@ -6,31 +6,31 @@ public class NPCDialoguer : MonoBehaviour
 {
     public DialogueGraph thisDialogue;
 
-    private LevelHandler levelHandler;
-    private DialogueHandler dialogueHandler;
-    private ActionHandler actionHandler;
+    private LevelHandler level;
+    private DialogueHandler dialogue;
+    private ActionHandler action;
 
     // Start is called before the first frame update
     void Start()
     {
-        levelHandler = FindObjectOfType<LevelHandler>();
-        dialogueHandler = FindObjectOfType<DialogueHandler>();
-        actionHandler = FindObjectOfType<ActionHandler>();
+        level = FindObjectOfType<LevelHandler>();
+        dialogue = FindObjectOfType<DialogueHandler>();
+        action = FindObjectOfType<ActionHandler>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        actionHandler.EnableTalking();
-        dialogueHandler.currentGraph = thisDialogue;
-        levelHandler.Load("Action");
+        action.EnableTalking();
+        dialogue.SetCurrentGraph(thisDialogue);
+        level.Load("Action");
         Debug.Log("Graph has been set!");
     }
 
     private void OnTriggerExit(Collider other)
     {
-        actionHandler.DisableTalking();
-        dialogueHandler.currentGraph = null;
-        levelHandler.Unload("Action");
+        action.DisableTalking();
+        dialogue.ClearCurrentGraph();
+        level.Unload("Action");
         Debug.Log("Graph has been nulled!");
     }
 }
