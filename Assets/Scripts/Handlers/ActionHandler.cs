@@ -19,7 +19,6 @@ public class ActionHandler : MonoBehaviour
         cameraController.enabled = true;
         talkControl.enabled = false;
     }
-
     public void EnableControls() 
     {
         playerControls.enabled = true;
