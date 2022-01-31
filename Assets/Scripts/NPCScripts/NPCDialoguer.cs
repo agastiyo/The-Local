@@ -10,6 +10,7 @@ public class NPCDialoguer : MonoBehaviour
     private DialogueHandler dialogue;
     private ActionHandler action;
 
+    /*
     // Start is called before the first frame update
     void Start()
     {
@@ -33,4 +34,5 @@ public class NPCDialoguer : MonoBehaviour
         level.Unload("Action");
         Debug.Log("Graph has been nulled!");
     }
+    */
 }
