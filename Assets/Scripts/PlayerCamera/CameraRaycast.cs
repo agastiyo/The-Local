@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class CameraRaycast : MonoBehaviour
 {
+    [Range(0f,20f)]
+    public float rayDist; //the distance the raycast detects objects
+
     private DialogueHandler dialogueHandler;
     private ActionHandler actionHandler;
     private LevelHandler levelHandler;
     private ItemHandler itemHandler;
 
-    private Vector3 center;
-    private RaycastHit hit;
-    private NPCProfile focusedNPC;
-    private ItemObject focusedItem;
-    private bool isLooking;
+    private Vector3 center; //center of the screen
+    private RaycastHit hit; //data of what the raycast hit
+    private NPCProfile focusedNPC; //NPC hit by raycast
+    private ItemObject focusedItem; //Item hit by raycast
+    private bool isLooking; //If the player is alreadly looking at someting
 
     // Start is called before the first frame update
     void Start()
@@ -31,10 +34,10 @@ public class CameraRaycast : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(center);
-        bool rayHit = Physics.Raycast(ray, out hit, 7);
+        bool rayHit = Physics.Raycast(ray, out hit, rayDist);
         Debug.DrawRay(ray.origin, ray.direction, Color.yellow);
 
-        if (rayHit && !isLooking)
+        if (rayHit && !isLooking) //if the player looks toward an object
         {
             if (hit.transform.gameObject.GetComponent<NPCProfile>()) //if the object is an npc
             {
@@ -59,7 +62,7 @@ public class CameraRaycast : MonoBehaviour
 
             isLooking = true;
         }
-        else if (!rayHit && isLooking)
+        else if (!rayHit && isLooking) //if the player looks away from an object
         {
             focusedNPC = null;
             focusedItem = null;
