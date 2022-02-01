@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NPCProfile : MonoBehaviour
 {
-    public string npcName;
-    public string npcProfession;
+    public string handle;
+    public string profession;
+    public DialogueGraph dialogue;
 }

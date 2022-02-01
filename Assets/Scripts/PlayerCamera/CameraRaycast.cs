@@ -8,9 +8,9 @@ public class CameraRaycast : MonoBehaviour
     private ActionHandler actionHandler;
     private LevelHandler levelHandler;
 
-    private Vector3 cameraCenter;
+    private Vector3 center;
     private RaycastHit hit;
-    private NPCDialoguer lookingAt;
+    private NPCProfile focusedObject;
     private bool isLooking;
 
     // Start is called before the first frame update
@@ -20,32 +20,39 @@ public class CameraRaycast : MonoBehaviour
         dialogueHandler = FindObjectOfType<DialogueHandler>();
         actionHandler = FindObjectOfType<ActionHandler>();
 
-        cameraCenter =
-            Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2));
+        center = new Vector3(Screen.width / 2, Screen.height / 2);
         isLooking = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Physics.Raycast(cameraCenter, transform.forward, out hit, 7) && !isLooking)
+        Ray ray = Camera.main.ScreenPointToRay(center);
+        bool rayHit = Physics.Raycast(ray, out hit, 7);
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
+
+        if (rayHit && !isLooking)
         {
-            if (hit.transform.gameObject.GetComponent<NPCDialoguer>())
+            if (hit.transform.gameObject.GetComponent<NPCProfile>()) 
             {
-                lookingAt = hit.transform.gameObject.GetComponent<NPCDialoguer>();
-                dialogueHandler.SetCurrentGraph(lookingAt.thisDialogue);
+                focusedObject = hit.transform.gameObject.GetComponent<NPCProfile>();
+                dialogueHandler.SetCurrentGraph(focusedObject.dialogue);
                 actionHandler.EnableTalking();
                 levelHandler.Load("Action");
                 Debug.Log("Graph has been set!");
             }
+            //add else if the ray hits a pickupable object
+
             isLooking = true;
         }
-        else if (!Physics.Raycast(cameraCenter, transform.forward, out hit, 7) && isLooking)
+        else if (!rayHit && isLooking)
         {
+            focusedObject = null;
             dialogueHandler.SetCurrentGraph(null);
             actionHandler.DisableTalking();
             levelHandler.Unload("Action");
             Debug.Log("Graph has been nulled!");
+
             isLooking = false;
         }
     }
