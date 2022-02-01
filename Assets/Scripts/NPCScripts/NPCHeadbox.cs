@@ -16,7 +16,7 @@ public class NPCHeadbox : MonoBehaviour
     void Start()
     {
         thisHeadboxRenderer.enabled = false;
-        thisHeadboxText.text = $"{npcProfile.npcName}\n-{npcProfile.npcProfession}-";
+        thisHeadboxText.text = $"{npcProfile.handle}\n-{npcProfile.profession}-";
     }
 
     // Update is called once per frame
