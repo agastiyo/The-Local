@@ -7,10 +7,14 @@ public class InventorySystem : MonoBehaviour
     private Dictionary<InventoryItemData, InventoryItem> m_itemDictionary;
     public List<InventoryItem> inventory { get; private set; }
 
+    [HideInInspector]
+    public static InventorySystem current;
+
     private void Awake()
     {
         inventory = new List<InventoryItem>();
         m_itemDictionary = new Dictionary<InventoryItemData, InventoryItem>();
+        current = this;
     }
 
     public void Add(InventoryItemData referenceData) 

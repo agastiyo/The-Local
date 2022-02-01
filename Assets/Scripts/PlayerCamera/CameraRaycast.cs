@@ -7,10 +7,12 @@ public class CameraRaycast : MonoBehaviour
     private DialogueHandler dialogueHandler;
     private ActionHandler actionHandler;
     private LevelHandler levelHandler;
+    private ItemHandler itemHandler;
 
     private Vector3 center;
     private RaycastHit hit;
-    private NPCProfile focusedObject;
+    private NPCProfile focusedNPC;
+    private ItemObject focusedItem;
     private bool isLooking;
 
     // Start is called before the first frame update
@@ -19,6 +21,7 @@ public class CameraRaycast : MonoBehaviour
         levelHandler = FindObjectOfType<LevelHandler>();
         dialogueHandler = FindObjectOfType<DialogueHandler>();
         actionHandler = FindObjectOfType<ActionHandler>();
+        itemHandler = FindObjectOfType<ItemHandler>();
 
         center = new Vector3(Screen.width / 2, Screen.height / 2);
         isLooking = false;
@@ -29,29 +32,47 @@ public class CameraRaycast : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(center);
         bool rayHit = Physics.Raycast(ray, out hit, 7);
-        Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
+        Debug.DrawRay(ray.origin, ray.direction, Color.yellow);
 
         if (rayHit && !isLooking)
         {
-            if (hit.transform.gameObject.GetComponent<NPCProfile>()) 
+            if (hit.transform.gameObject.GetComponent<NPCProfile>()) //if the object is an npc
             {
-                focusedObject = hit.transform.gameObject.GetComponent<NPCProfile>();
-                dialogueHandler.SetCurrentGraph(focusedObject.dialogue);
+                focusedNPC = hit.transform.gameObject.GetComponent<NPCProfile>();
+
+                dialogueHandler.SetCurrentGraph(focusedNPC.dialogue);
                 actionHandler.EnableTalking();
                 levelHandler.Load("Action");
+
                 Debug.Log("Graph has been set!");
             }
-            //add else if the ray hits a pickupable object
+            else if (hit.transform.gameObject.GetComponent<ItemObject>()) //if the object is a pickupable
+            {
+                focusedItem = hit.transform.gameObject.GetComponent<ItemObject>();
+
+                itemHandler.SetCurrentItem(focusedItem);
+                actionHandler.EnablePickups();
+                levelHandler.Load("Action");
+
+                Debug.Log("Item has been set!");
+            }
 
             isLooking = true;
         }
         else if (!rayHit && isLooking)
         {
-            focusedObject = null;
+            focusedNPC = null;
+            focusedItem = null;
+
             dialogueHandler.SetCurrentGraph(null);
+            itemHandler.SetCurrentItem(null);
+
             actionHandler.DisableTalking();
+            actionHandler.DisablePickups();
+
             levelHandler.Unload("Action");
-            Debug.Log("Graph has been nulled!");
+
+            Debug.Log("Graph/Item has been nulled!");
 
             isLooking = false;
         }

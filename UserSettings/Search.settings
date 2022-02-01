@@ -10,6 +10,9 @@ scopes = {
 	"last_search.B064B029" = "DOTween"
 	"OpenInspectorPreview.B064B029" = "0"
 	"currentGroup.B064B029" = "all"
+	"last_search.7C5D90A9" = ""
+	"OpenInspectorPreview.7C5D90A9" = "0"
+	"currentGroup.7C5D90A9" = "all"
 }
 providers = {
 	adb = {

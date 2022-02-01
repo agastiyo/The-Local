@@ -7,17 +7,21 @@ public class ActionHandler : MonoBehaviour
     private PlayerControls playerControls;
     private PlayerCameraController cameraController;
     private TalkControl talkControl;
+    private PickupControl pickupControl;
 
     public void OnGameStart() 
     {
         playerControls = FindObjectOfType<PlayerControls>();
         cameraController = FindObjectOfType<PlayerCameraController>();
         talkControl = FindObjectOfType<TalkControl>();
+        pickupControl = FindObjectOfType<PickupControl>();
+
         Debug.Log("Got player data!");
 
         playerControls.enabled = true;
         cameraController.enabled = true;
         talkControl.enabled = false;
+        pickupControl.enabled = false;
     }
     public void EnableControls() 
     {
@@ -40,5 +44,13 @@ public class ActionHandler : MonoBehaviour
     public void InDialogue(bool inDialogue) 
     {
         talkControl.inDialogue = inDialogue;
+    }
+    public void EnablePickups() 
+    {
+        pickupControl.enabled = true;
+    }
+    public void DisablePickups() 
+    {
+        pickupControl.enabled = false;
     }
 }

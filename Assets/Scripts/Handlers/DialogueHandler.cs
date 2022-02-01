@@ -11,8 +11,4 @@ public class DialogueHandler : MonoBehaviour
     {
         currentGraph = graph;
     }
-    public void ClearCurrentGraph()
-    {
-        currentGraph = null;
-    }
 }
