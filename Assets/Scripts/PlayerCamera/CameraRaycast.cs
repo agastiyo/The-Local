@@ -35,7 +35,7 @@ public class CameraRaycast : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(center);
         bool rayHit = Physics.Raycast(ray, out hit, rayDist);
-        Debug.DrawRay(ray.origin, ray.direction, Color.yellow);
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
 
         if (rayHit && !isLooking) //if the player looks toward an object
         {
