@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CameraRaycast : MonoBehaviour
 {
+    //The camera raycast needs to reset the object every time the raycast detects
+    //a new object or no object. Right now, to change the object, you have to null
+    //the object and then set a new one. You should be able the reset the object
+    //just by looking at a new one as well. Figure out how to do that.
+
     [Range(0f,20f)]
     public float rayDist; //the distance the raycast detects objects
 
