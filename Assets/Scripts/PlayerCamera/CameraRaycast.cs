@@ -14,8 +14,7 @@ public class CameraRaycast : MonoBehaviour
 
     private Vector3 center; //center of the screen
     private RaycastHit hit; //data of what the raycast hit
-    private NPCProfile focusedNPC; //NPC hit by raycast
-    private ItemObject focusedItem; //Item hit by raycast
+    private GameObject focused; //NPC/Item hit by raycast
     private bool isLooking; //If the player is alreadly looking at someting
 
     // Start is called before the first frame update
@@ -41,31 +40,30 @@ public class CameraRaycast : MonoBehaviour
         {
             if (hit.transform.gameObject.GetComponent<NPCProfile>()) //if the object is an npc
             {
-                focusedNPC = hit.transform.gameObject.GetComponent<NPCProfile>();
+                focused = hit.transform.gameObject;
 
-                dialogueHandler.SetCurrentGraph(focusedNPC.dialogue);
+                dialogueHandler.SetCurrentGraph(focused.GetComponent<NPCProfile>().dialogue);
                 actionHandler.EnableTalking();
                 levelHandler.Load("Action");
 
                 Debug.Log("Graph has been set!");
+                isLooking = true;
             }
             else if (hit.transform.gameObject.GetComponent<ItemObject>()) //if the object is a pickupable
             {
-                focusedItem = hit.transform.gameObject.GetComponent<ItemObject>();
+                focused = hit.transform.gameObject;
 
-                itemHandler.SetCurrentItem(focusedItem);
+                itemHandler.SetCurrentItem(focused.GetComponent<ItemObject>());
                 actionHandler.EnablePickups();
                 levelHandler.Load("Action");
 
                 Debug.Log("Item has been set!");
+                isLooking = true;
             }
-
-            isLooking = true;
         }
         else if (!rayHit && isLooking) //if the player looks away from an object
         {
-            focusedNPC = null;
-            focusedItem = null;
+            focused = null;
 
             dialogueHandler.SetCurrentGraph(null);
             itemHandler.SetCurrentItem(null);
