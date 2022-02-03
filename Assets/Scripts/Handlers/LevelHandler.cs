@@ -14,6 +14,11 @@ public class LevelHandler : MonoBehaviour
         StartCoroutine(LoadScene("StartMenu"));
     }
 
+    public void LoadIfNotLoaded() 
+    {
+
+    }
+
     public void Load(string sceneToLoad)
     {
         StartCoroutine(LoadScene(sceneToLoad));

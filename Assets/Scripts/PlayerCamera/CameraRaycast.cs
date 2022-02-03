@@ -14,8 +14,9 @@ public class CameraRaycast : MonoBehaviour
 
     private Vector3 center; //center of the screen
     private bool rayHit; //did the ray hit something?
+    private GameObject obj; //the object the raycast hit in this frame
     private RaycastHit hit; //data of what the raycast hit
-    private bool prevRayHit; //did the ray hit something last frame?
+    private GameObject prevObj; //the object hit in the last frame
     private RaycastHit prevHit; //data of what the raycast hit in the last frame
     private GameObject focused; //NPC/Item hit by current raycast
     private bool isLooking; //If the player is alreadly looking at someting
@@ -31,7 +32,8 @@ public class CameraRaycast : MonoBehaviour
         center = new Vector3(Screen.width / 2, Screen.height / 2);
 
         Ray ray = Camera.main.ScreenPointToRay(center);
-        prevRayHit = Physics.Raycast(ray, out prevHit, rayDist);
+        Physics.Raycast(ray, out prevHit, rayDist);
+        prevObj = prevHit.transform.gameObject;
 
         isLooking = false;
     }
@@ -43,8 +45,14 @@ public class CameraRaycast : MonoBehaviour
         rayHit = Physics.Raycast(ray, out hit, rayDist);
         Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
 
-        GameObject prevObj = prevHit.transform.gameObject; //not being set idk this is the problem
-        GameObject obj = hit.transform.gameObject;
+        try 
+        {
+            obj = hit.transform.gameObject;
+        }
+        catch (MissingReferenceException)
+        {
+            obj = null;
+        }
 
         if (rayHit && prevObj != obj) 
         //if the player looks toward a new object
@@ -81,7 +89,7 @@ public class CameraRaycast : MonoBehaviour
         else if (rayHit && obj == prevObj) { } //nothing
         else { ResetAll(); } //reset everything
 
-        prevRayHit = rayHit;
+        prevObj = obj;
     }
 
     void ResetAll() 
@@ -100,4 +108,6 @@ public class CameraRaycast : MonoBehaviour
 
         isLooking = false;
     }
+
+
 }
