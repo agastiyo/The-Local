@@ -45,21 +45,14 @@ public class CameraRaycast : MonoBehaviour
         rayHit = Physics.Raycast(ray, out hit, rayDist);
         Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
 
-        try 
-        {
-            obj = hit.transform.gameObject;
-        }
-        catch (MissingReferenceException)
-        {
-            obj = null;
-        }
+        obj = hit.transform.gameObject;
 
         if (rayHit && prevObj != obj) 
         //if the player looks toward a new object
         {
             Debug.Log("This object is different!");
 
-            if (hit.transform.gameObject.GetComponent<NPCProfile>()) //if the object is an npc
+            if (obj.GetComponent<NPCProfile>()) //if the object is an npc
             {
                 focused = obj;
 
@@ -70,7 +63,7 @@ public class CameraRaycast : MonoBehaviour
                 Debug.Log("Graph has been set!");
                 isLooking = true;
             }
-            else if (hit.transform.gameObject.GetComponent<ItemObject>()) //if the object is a pickupable
+            else if (obj.GetComponent<ItemObject>()) //if the object is a pickupable
             {
                 focused = obj;
 
