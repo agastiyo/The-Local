@@ -13,11 +13,11 @@ public class CameraRaycast : MonoBehaviour
     private ItemHandler itemHandler;
 
     private Vector3 center; //center of the screen
-    private RaycastHit hit; //data of what the raycast hit
     private bool rayHit; //did the ray hit something?
-    private RaycastHit prevHit; //data of what the raycast hit in the last frame
+    private RaycastHit hit; //data of what the raycast hit
     private bool prevRayHit; //did the ray hit something last frame?
-    private GameObject focused; //NPC/Item hit by raycast
+    private RaycastHit prevHit; //data of what the raycast hit in the last frame
+    private GameObject focused; //NPC/Item hit by current raycast
     private bool isLooking; //If the player is alreadly looking at someting
 
     // Start is called before the first frame update
