@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class CameraRaycast : MonoBehaviour
 {
+    //The camera raycast needs to reset the object every time the raycast detects
+    //a new object or no object. Right now, to change the object, you have to null
+    //the object and then set a new one. You should be able the reset the object
+    //just by looking at a new one as well. Figure out how to do that.
+
+    [Range(0f,20f)]
+    public float rayDist; //the distance the raycast detects objects
+
     private DialogueHandler dialogueHandler;
     private ActionHandler actionHandler;
     private LevelHandler levelHandler;
     private ItemHandler itemHandler;
 
-    private Vector3 center;
-    private RaycastHit hit;
-    private NPCProfile focusedNPC;
-    private ItemObject focusedItem;
-    private bool isLooking;
+    private Vector3 center; //center of the screen
+    private RaycastHit hit; //data of what the raycast hit
+    private GameObject focused; //NPC/Item hit by raycast
+    private bool isLooking; //If the player is alreadly looking at someting
 
     // Start is called before the first frame update
     void Start()
@@ -31,38 +38,37 @@ public class CameraRaycast : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(center);
-        bool rayHit = Physics.Raycast(ray, out hit, 7);
-        Debug.DrawRay(ray.origin, ray.direction, Color.yellow);
+        bool rayHit = Physics.Raycast(ray, out hit, rayDist);
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
 
-        if (rayHit && !isLooking)
+        if (rayHit && !isLooking) //if the player looks toward an object
         {
             if (hit.transform.gameObject.GetComponent<NPCProfile>()) //if the object is an npc
             {
-                focusedNPC = hit.transform.gameObject.GetComponent<NPCProfile>();
+                focused = hit.transform.gameObject;
 
-                dialogueHandler.SetCurrentGraph(focusedNPC.dialogue);
+                dialogueHandler.SetCurrentGraph(focused.GetComponent<NPCProfile>().dialogue);
                 actionHandler.EnableTalking();
                 levelHandler.Load("Action");
 
                 Debug.Log("Graph has been set!");
+                isLooking = true;
             }
             else if (hit.transform.gameObject.GetComponent<ItemObject>()) //if the object is a pickupable
             {
-                focusedItem = hit.transform.gameObject.GetComponent<ItemObject>();
+                focused = hit.transform.gameObject;
 
-                itemHandler.SetCurrentItem(focusedItem);
+                itemHandler.SetCurrentItem(focused.GetComponent<ItemObject>());
                 actionHandler.EnablePickups();
                 levelHandler.Load("Action");
 
                 Debug.Log("Item has been set!");
+                isLooking = true;
             }
-
-            isLooking = true;
         }
-        else if (!rayHit && isLooking)
+        else if (!rayHit && isLooking) //if the player looks away from an object
         {
-            focusedNPC = null;
-            focusedItem = null;
+            focused = null;
 
             dialogueHandler.SetCurrentGraph(null);
             itemHandler.SetCurrentItem(null);

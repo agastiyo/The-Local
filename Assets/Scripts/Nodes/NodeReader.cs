@@ -7,9 +7,9 @@ using TMPro;
 public class NodeReader : MonoBehaviour
 {
     [HideInInspector]
-    public DialogueGraph graph;
-    public TextMeshProUGUI npcName;
-    public TextMeshProUGUI npcDialogue;
+    public DialogueGraph graph; //dialogue to use
+    public TextMeshProUGUI npcName; //name of the npc
+    public TextMeshProUGUI npcDialogue; //what the npc says
 
     private LevelHandler levelHandler;
     private DialogueHandler dialogueHandler;
@@ -26,12 +26,11 @@ public class NodeReader : MonoBehaviour
 
         foreach (BaseNode node in graph.nodes)
         {
-            if(node.GetString() == "Start") 
+            if(node.GetString() == "Start") //if this is the starting node
             {
-                graph.current = node;
+                graph.current = node; //graph should start there
                 Debug.Log("Set current node!");
                 break;
-                //identify starting node
             }
         }
 
@@ -41,22 +40,24 @@ public class NodeReader : MonoBehaviour
     private IEnumerator ParseNode() 
     {
         Debug.Log("Parsing node!");
-        string[] nodeData = graph.current.GetString().Split("/");
+        string[] nodeData = graph.current.GetString().Split("/"); //get node data
 
-        if (nodeData[0] == "Start") 
+        if (nodeData[0] == "Start") //if this node is the start node
         {
-            NextNode("exit");
+            NextNode("exit"); //move on
         }
-        if (nodeData[0] == "DialogueNode")
+        if (nodeData[0] == "DialogueNode") //if its a dialogue node
         {
             //Process the dialogue
             npcName.text = nodeData[1];
             npcDialogue.text = nodeData[2];
+            //wait for mouse click
             yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
             yield return new WaitUntil(() => Input.GetMouseButtonUp(0));
+            //move on
             NextNode("exit");
         }
-        if (nodeData[0] == "Exit")
+        if (nodeData[0] == "Exit") //if this is the last node
         {
             actionHandler.InDialogue(false); //no longer in a dialogue
             levelHandler.Unload("Dialogue");

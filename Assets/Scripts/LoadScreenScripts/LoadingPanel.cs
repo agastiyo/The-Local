@@ -9,28 +9,17 @@ public class LoadingPanel : MonoBehaviour
     public Image panel;
     [Range(0.1f,1f)]
     public float duration;
-
     [HideInInspector]
     public bool isLoading = false;
 
-    private Color color;
-    private Color alphaCol;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        color = panel.color;
-        alphaCol = new Color(0f, 0f, 0f, 0f);
-    }
-
-    public void TweenIn() 
+    public void TweenIn() //slide in
     {
         panel.rectTransform.anchoredPosition = new Vector2(0f,-2000f);
         Tween tween = panel.rectTransform.DOAnchorPosY(0f, duration).SetUpdate(true).SetEase(Ease.OutSine);
         tween.onComplete += () => isLoading = true;
     }
 
-    public void TweenOut() 
+    public void TweenOut() //slide out
     {
         Tween tween = panel.rectTransform.DOAnchorPosY(-2000f, duration).SetUpdate(true).SetEase(Ease.InSine);
         tween.onComplete += () => isLoading = false;
