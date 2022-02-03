@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class CameraRaycast : MonoBehaviour
 {
-    //The camera raycast needs to reset the object every time the raycast detects
-    //a new object or no object. Right now, to change the object, you have to null
-    //the object and then set a new one. You should be able the reset the object
-    //just by looking at a new one as well. Figure out how to do that.
-
     [Range(0f,20f)]
     public float rayDist; //the distance the raycast detects objects
 
@@ -19,6 +14,9 @@ public class CameraRaycast : MonoBehaviour
 
     private Vector3 center; //center of the screen
     private RaycastHit hit; //data of what the raycast hit
+    private bool rayHit; //did the ray hit something?
+    private RaycastHit prevHit; //data of what the raycast hit in the last frame
+    private bool prevRayHit; //did the ray hit something last frame?
     private GameObject focused; //NPC/Item hit by raycast
     private bool isLooking; //If the player is alreadly looking at someting
 
@@ -31,6 +29,10 @@ public class CameraRaycast : MonoBehaviour
         itemHandler = FindObjectOfType<ItemHandler>();
 
         center = new Vector3(Screen.width / 2, Screen.height / 2);
+
+        Ray ray = Camera.main.ScreenPointToRay(center);
+        prevRayHit = Physics.Raycast(ray, out prevHit, rayDist);
+
         isLooking = false;
     }
 
@@ -38,14 +40,20 @@ public class CameraRaycast : MonoBehaviour
     void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(center);
-        bool rayHit = Physics.Raycast(ray, out hit, rayDist);
+        rayHit = Physics.Raycast(ray, out hit, rayDist);
         Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
 
-        if (rayHit && !isLooking) //if the player looks toward an object
+        GameObject prevObj = prevHit.transform.gameObject; //not being set idk this is the problem
+        GameObject obj = hit.transform.gameObject;
+
+        if (rayHit && prevObj != obj) 
+        //if the player looks toward a new object
         {
+            Debug.Log("This object is different!");
+
             if (hit.transform.gameObject.GetComponent<NPCProfile>()) //if the object is an npc
             {
-                focused = hit.transform.gameObject;
+                focused = obj;
 
                 dialogueHandler.SetCurrentGraph(focused.GetComponent<NPCProfile>().dialogue);
                 actionHandler.EnableTalking();
@@ -56,7 +64,7 @@ public class CameraRaycast : MonoBehaviour
             }
             else if (hit.transform.gameObject.GetComponent<ItemObject>()) //if the object is a pickupable
             {
-                focused = hit.transform.gameObject;
+                focused = obj;
 
                 itemHandler.SetCurrentItem(focused.GetComponent<ItemObject>());
                 actionHandler.EnablePickups();
@@ -65,22 +73,31 @@ public class CameraRaycast : MonoBehaviour
                 Debug.Log("Item has been set!");
                 isLooking = true;
             }
+            else //if the object doesnt matter
+            {
+                ResetAll();
+            }
         }
-        else if (!rayHit && isLooking) //if the player looks away from an object
-        {
-            focused = null;
+        else if (rayHit && obj == prevObj) { } //nothing
+        else { ResetAll(); } //reset everything
 
-            dialogueHandler.SetCurrentGraph(null);
-            itemHandler.SetCurrentItem(null);
+        prevRayHit = rayHit;
+    }
 
-            actionHandler.DisableTalking();
-            actionHandler.DisablePickups();
+    void ResetAll() 
+    {
+        focused = null;
 
-            levelHandler.Unload("Action");
+        dialogueHandler.SetCurrentGraph(null);
+        itemHandler.SetCurrentItem(null);
 
-            Debug.Log("Graph/Item has been nulled!");
+        actionHandler.DisableTalking();
+        actionHandler.DisablePickups();
 
-            isLooking = false;
-        }
+        levelHandler.Unload("Action");
+
+        Debug.Log("Graph/Item has been nulled!");
+
+        isLooking = false;
     }
 }
