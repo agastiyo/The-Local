@@ -13,13 +13,9 @@ public class CameraRaycast : MonoBehaviour
     private ItemHandler itemHandler;
 
     private Vector3 center; //center of the screen
-    private bool rayHit; //did the ray hit something?
-    private GameObject obj; //the object the raycast hit in this frame
-    private RaycastHit hit; //data of what the raycast hit
-    private GameObject prevObj; //the object hit in the last frame
-    private RaycastHit prevHit; //data of what the raycast hit in the last frame
-    private GameObject focused; //NPC/Item hit by current raycast
-    private bool isLooking; //If the player is alreadly looking at someting
+    private bool rayHit, uiLoaded; //Did the ray hit something?/Is the ui already loaded?
+    private GameObject obj, prevObj; //the object the raycast hit in this/previous frame
+    private RaycastHit hit, prevHit; //data of what the raycast hit in this/previous frame
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +31,7 @@ public class CameraRaycast : MonoBehaviour
         Physics.Raycast(ray, out prevHit, rayDist);
         prevObj = prevHit.transform.gameObject;
 
-        isLooking = false;
+        uiLoaded = false;
     }
 
     // Update is called once per frame
@@ -47,32 +43,27 @@ public class CameraRaycast : MonoBehaviour
 
         obj = hit.transform.gameObject;
 
-        if (rayHit && prevObj != obj) 
-        //if the player looks toward a new object
+        if (rayHit && prevObj != obj) //if the player looks toward a new object
         {
             Debug.Log("This object is different!");
 
             if (obj.GetComponent<NPCProfile>()) //if the object is an npc
             {
-                focused = obj;
-
-                dialogueHandler.SetCurrentGraph(focused.GetComponent<NPCProfile>().dialogue);
+                dialogueHandler.SetCurrentGraph(obj.GetComponent<NPCProfile>().dialogue);
                 actionHandler.EnableTalking();
-                levelHandler.Load("Action");
+                if (!uiLoaded) { levelHandler.Load("Action"); }
 
                 Debug.Log("Graph has been set!");
-                isLooking = true;
+                uiLoaded = true;
             }
             else if (obj.GetComponent<ItemObject>()) //if the object is a pickupable
             {
-                focused = obj;
-
-                itemHandler.SetCurrentItem(focused.GetComponent<ItemObject>());
+                itemHandler.SetCurrentItem(obj.GetComponent<ItemObject>());
                 actionHandler.EnablePickups();
-                levelHandler.Load("Action");
+                if (!uiLoaded) { levelHandler.Load("Action"); }
 
                 Debug.Log("Item has been set!");
-                isLooking = true;
+                uiLoaded = true;
             }
             else //if the object doesnt matter
             {
@@ -87,8 +78,6 @@ public class CameraRaycast : MonoBehaviour
 
     void ResetAll() 
     {
-        focused = null;
-
         dialogueHandler.SetCurrentGraph(null);
         itemHandler.SetCurrentItem(null);
 
@@ -99,8 +88,6 @@ public class CameraRaycast : MonoBehaviour
 
         Debug.Log("Graph/Item has been nulled!");
 
-        isLooking = false;
+        uiLoaded = false;
     }
-
-
 }
