@@ -65,7 +65,11 @@ public class CameraRaycast : MonoBehaviour
                 ResetAll();
             }
         }
-        else if (rayHit && obj == prevObj) { } //nothing
+        else if (rayHit && obj == prevObj) 
+        {
+            actionHandler.EnableTalking(); 
+            actionHandler.EnablePickups();
+        }
         else { ResetAll(); } //reset everything
 
         prevObj = obj;
