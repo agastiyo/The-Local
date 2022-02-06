@@ -62,6 +62,7 @@ public class NodeReader : MonoBehaviour
             actionHandler.InDialogue(false); //no longer in a dialogue
             levelHandler.Unload("Dialogue");
             actionHandler.EnableControls();
+            actionHandler.EnableTalking();
             //Load command in TalkControl.cs
         }
     }

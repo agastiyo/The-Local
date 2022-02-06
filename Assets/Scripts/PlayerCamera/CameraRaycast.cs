@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class CameraRaycast : MonoBehaviour
 {
     [Range(0f,20f)]
     public float rayDist; //the distance the raycast detects objects
     public Canvas actionUI;
+    
 
     private DialogueHandler dialogueHandler;
     private ActionHandler actionHandler;
@@ -14,17 +17,22 @@ public class CameraRaycast : MonoBehaviour
 
     private Vector3 center; //center of the screen
     private bool rayHit; //Did the ray hit something?
+    private TextMeshProUGUI actionText; //text in action UI
     private GameObject obj, prevObj; //the object the raycast hit in this/previous frame
     private RaycastHit hit, prevHit; //data of what the raycast hit in this/previous frame
 
     // Start is called before the first frame update
     void Start()
     {
+        actionUI.enabled = false;
+
         dialogueHandler = FindObjectOfType<DialogueHandler>();
         actionHandler = FindObjectOfType<ActionHandler>();
         itemHandler = FindObjectOfType<ItemHandler>();
 
         center = new Vector3(Screen.width / 2, Screen.height / 2);
+
+        actionText = actionUI.GetComponentInChildren<TextMeshProUGUI>();
 
         Ray ray = Camera.main.ScreenPointToRay(center);
         Physics.Raycast(ray, out prevHit, rayDist);
@@ -48,6 +56,7 @@ public class CameraRaycast : MonoBehaviour
             {
                 dialogueHandler.SetCurrentGraph(obj.GetComponent<NPCProfile>().dialogue);
                 actionHandler.EnableTalking();
+                actionText.text = "E - Talk";
                 actionUI.enabled = true;
 
                 Debug.Log("Graph has been set!");
@@ -56,6 +65,7 @@ public class CameraRaycast : MonoBehaviour
             {
                 itemHandler.SetCurrentItem(obj.GetComponent<ItemObject>());
                 actionHandler.EnablePickups();
+                actionText.text = $"E - Pick Up {obj.GetComponent<ItemObject>().referenceItem.displayName}";
                 actionUI.enabled = true;
 
                 Debug.Log("Item has been set!");
@@ -65,11 +75,7 @@ public class CameraRaycast : MonoBehaviour
                 ResetAll();
             }
         }
-        else if (rayHit && obj == prevObj) 
-        {
-            actionHandler.EnableTalking(); 
-            actionHandler.EnablePickups();
-        }
+        else if (rayHit && obj == prevObj) { } //do nothing
         else { ResetAll(); } //reset everything
 
         prevObj = obj;
