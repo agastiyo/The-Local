@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,9 +33,7 @@ public class CameraRaycast : MonoBehaviour
 
         actionText = actionUI.GetComponentInChildren<TextMeshProUGUI>();
 
-        Ray ray = Camera.main.ScreenPointToRay(center);
-        Physics.Raycast(ray, out prevHit, rayDist);
-        prevObj = prevHit.transform.gameObject;
+        prevObj = null;
     }
 
     // Update is called once per frame
@@ -43,9 +42,11 @@ public class CameraRaycast : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(center);
         Physics.Raycast(ray, out hit, rayDist);
 
-        obj = hit.transform.gameObject;
+        try { obj = hit.transform.gameObject; }
+        catch (NullReferenceException) { obj = null; }
 
-        if (obj != prevObj) //if the player looks toward a new object
+        if (obj == null && prevObj != null) { ResetAll(); } //if the player starts looking at nothing
+        else if (obj != prevObj) //if the player looks toward a new object
         {
             Debug.Log("This object is different!");
 
@@ -69,18 +70,23 @@ public class CameraRaycast : MonoBehaviour
             }
             else //if the object doesnt matter
             {
-                dialogueHandler.SetCurrentGraph(null);
-                itemHandler.SetCurrentItem(null);
-
-                actionHandler.DisableTalking();
-                actionHandler.DisablePickups();
-
-                actionUI.enabled = false;
-
-                Debug.Log("Graph/Item has been nulled!");
+                ResetAll();
             }
         }
 
         prevObj = obj;
+    }
+
+    void ResetAll() 
+    {
+        dialogueHandler.SetCurrentGraph(null);
+        itemHandler.SetCurrentItem(null);
+
+        actionHandler.DisableTalking();
+        actionHandler.DisablePickups();
+
+        actionUI.enabled = false;
+
+        Debug.Log("Graph/Item has been nulled!");
     }
 }
