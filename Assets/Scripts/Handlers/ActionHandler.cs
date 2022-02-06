@@ -32,6 +32,8 @@ public class ActionHandler : MonoBehaviour
     {
         playerControls.enabled = false;
         cameraController.enabled = false;
+        DisableTalking();
+        DisablePickups();
     }
     public void EnableTalking() 
     { 

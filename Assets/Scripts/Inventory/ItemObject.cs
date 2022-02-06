@@ -6,9 +6,16 @@ public class ItemObject : MonoBehaviour
 {
     public InventoryItemData referenceItem;
 
+    private InventorySystem inventory;
+
+    void Start()
+    {
+        inventory = FindObjectOfType<InventorySystem>();
+    }
+
     public void OnHandlePickupItem() 
     {
-        InventorySystem.current.Add(referenceItem);
+        inventory.Add(referenceItem);
         Destroy(gameObject);
     }
 }

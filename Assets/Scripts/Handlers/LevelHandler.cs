@@ -13,6 +13,8 @@ public class LevelHandler : MonoBehaviour
     {
         StartCoroutine(LoadScene("StartMenu"));
     }
+
+    //functions ---------------------------------------------------
     
     public void Load(string sceneToLoad)
     {
